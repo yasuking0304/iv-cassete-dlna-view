@@ -1,0 +1,115 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:s="clr-namespace:System;assembly=mscorlib"
+    xml:space="preserve">
+
+    <s:String x:Key="PG_TITLE">カセットHDDリスト</s:String>
+    
+    <s:String x:Key="RECORD_DATETIME">{0,0:D4}/{1,0:D2}/{2,0:D2} {3,0:D2}:{4,0:D2}:{5,0:D2}</s:String>
+    <s:String x:Key="RECORD_DATETIME_AM">{0,0:D4}/{1,0:D2}/{2,0:D2}  AM {3}:{4,0:D2}:{5,0:D2}</s:String>
+    <s:String x:Key="RECORD_DATETIME_PM">{0,0:D4}/{1,0:D2}/{2,0:D2}  PM {3}:{4,0:D2}:{5,0:D2}</s:String>
+    <s:String x:Key="RECORD_DATE">{0,0:D4}/{1,0:D2}/{2,0:D2}</s:String>
+    <s:String x:Key="RECORD_WEEK"> ({0})   </s:String>
+    <s:String x:Key="RECORD_TIME">{0,0:D2}:{1,0:D2}</s:String>
+    <s:String x:Key="RECORD_TIME_AM"> AM {0}:{1,0:D2}</s:String>
+    <s:String x:Key="RECORD_TIME_PM"> PM {0}:{1,0:D2}</s:String>
+    
+    <s:String x:Key="RECDURATION_TIME">{0,0:D2}分{1,0:D2}秒</s:String>
+    <s:String x:Key="RECDURATION_TIME_HOUR">{0}時間{1,0:D2}分{2,0:D2}秒</s:String>
+    <s:String x:Key="RECDURATION_TIME_NOR">00:{0,0:D2}:{1,0:D2}</s:String>
+    <s:String x:Key="RECDURATION_TIME_HOUR_NOR">{0}:{1,0:D2}:{2,0:D2}</s:String>
+
+    <s:String x:Key="FILE_NAME">PROG{0,0:X2}{1,0:X2}.AVS</s:String>
+    <s:String x:Key="IMAGE_NAME">\\iVDR_TVR\\DT_OPGR\\PGR_{0,0:x4}\\TN{0,0:x4}00.bmp</s:String>
+    <s:String x:Key="OPGR_INF_TBL">\\iVDR_TVR\\OPGR_INF.TBL</s:String>
+    <s:String x:Key="UDFF_INF_TBL">\\iVDR_TVR\\UDFF_INF.TBL</s:String>
+    <s:String x:Key="TVREC_MGR">\\iVDR_TVR\\TVREC.MGR</s:String>
+    
+    <s:String x:Key="SUNDAY">日</s:String>
+    <s:String x:Key="MONDAY">月</s:String>
+    <s:String x:Key="TUESDAY">火</s:String>
+    <s:String x:Key="WEDNESDAY">水</s:String>
+    <s:String x:Key="THURSDAY">木</s:String>
+    <s:String x:Key="FRIDAY">金</s:String>
+    <s:String x:Key="SATURDAY">土</s:String>
+
+    <s:String x:Key="ALL">すべて</s:String>
+    <s:String x:Key="DIGITAL">デジタル</s:String>
+    <s:String x:Key="BS">BS</s:String>
+    <s:String x:Key="CS">CS</s:String>
+    <s:String x:Key="ANALOG">アナログ</s:String>
+
+    <s:String x:Key="LBL_DRIVE">メディア</s:String>
+    <s:String x:Key="LBL_FOLDER">フィルタ条件</s:String>
+    <s:String x:Key="LBL_START_TIMES">開始時刻 </s:String>
+    <s:String x:Key="LBL_RECORDING_TIMES">録画時間 </s:String>
+    <s:String x:Key="LBL_RECORDING_MODE">録画モード </s:String>
+    <s:String x:Key="LBL_FILE_NAME">ファイル名 </s:String>
+    <s:String x:Key="LBL_FOLDER_NAME">フォルダ名 </s:String>
+    <s:String x:Key="LBL_GENRE_NAME">ジャンル </s:String>
+    <s:String x:Key="LBL_ID_NAME">固有名 </s:String>
+
+    <s:String x:Key="TOOLTIP_TITLE">番組情報</s:String>
+
+    <s:String x:Key="LBL_ORDER">並び順</s:String>
+    <s:String x:Key="LBL_ORDER_FILE">ファイル名順</s:String>
+    <s:String x:Key="LBL_ORDER_DATE">日付順</s:String>
+    
+    <s:String x:Key="LBL_GENRE_UNKNOWN">不明</s:String>
+
+    <s:String x:Key="FOLDER_UNSET">フォルダ未設定</s:String>
+    
+    <s:String x:Key="LBL_DLNA_DEVICENAME">デバイス名</s:String>
+    <s:String x:Key="LBL_DLNA_MANUFACTURERNAME">製造元</s:String>
+    <s:String x:Key="LBL_DLNA_MODELNAME">モデル</s:String>
+    <s:String x:Key="LBL_DLNA_MODELNUMBER">モデル番号</s:String>
+    <s:String x:Key="LBL_DLNA_UUID">UUID</s:String>
+    <s:String x:Key="LBL_DLNA_LOCATION">ロケーション</s:String>
+    <s:String x:Key="LBL_DLNA_PRESENTATION">Webページ</s:String>
+    
+    <s:String x:Key="LBL_DLNA_RECORD">リモート録画</s:String>
+    <s:String x:Key="LBL_DLNA_RECORD_NONE"> 未対応 </s:String>
+    <s:String x:Key="LBL_DLNA_RECORD_RECORD"> LAN予約 </s:String>
+    <s:String x:Key="LBL_DLNA_RECORD_RECORDEXT"> LAN録画 </s:String>
+
+    <s:String x:Key="LBL_COPYBUTTON">Copyボタン</s:String>
+    <s:String x:Key="LBL_COPYBUTTON_COPYMODE">Copy</s:String>
+    <s:String x:Key="LBL_COPYBUTTON_SAVEMODE">Save</s:String>
+    <s:String x:Key="LBL_COPYBUTTON_GUIDANCE">　リスト情報をクリップボードにコピーします.</s:String>
+    <s:String x:Key="LBL_COPYBUTTON_HELP" xml:space="preserve">Copyボタンを長押しすると 
+Saveボタンに変化してファイル保存できます.</s:String>    
+    <s:String x:Key="WAIT_MINUTE">しばらくお待ちください...</s:String>
+    <s:String x:Key="SIZE_OF_DISC">容量 {0}GB</s:String>
+    <s:String x:Key="FREE_SPACE">残量 {0}GB</s:String>
+    <s:String x:Key="SIZE_OF_TIME">約{0}時間</s:String>
+    <s:String x:Key="NUM_OF_RECORD">件数 {0}</s:String>
+    <s:String x:Key="NUM_OF_RECORD2">件数 {0}/{1}</s:String>
+    
+    <s:String x:Key="LBL_DLNA_SUPPORT_RECORDING">ネット録画サポート状況</s:String>
+    <s:String x:Key="LBL_DLNA_SUPPORT_LIVETUNER">ライブチューナサポート状況</s:String>
+    <s:String x:Key="LBL_DLNA_SUPPORT_DUBBING">Dlna ダビングサポート状況</s:String>
+    <s:String x:Key="LBL_DLNA_SUPPORT_CATV">Dlna CATV (JLabs SEPC-020)サポート状況</s:String>
+    <s:String x:Key="LBL_DLNA_SUPPORT_SPTV">Dlna スカパー!プレミアムサービスLink (SPTV)サポート状況</s:String>
+    <s:String x:Key="LBL_DLNA_SUPPORT_REGZA">Regza TVダビングサポート状況</s:String>
+    
+    <s:String x:Key="MENU_ABOUT">カセットHDDリスト について...</s:String>
+    <s:String x:Key="MENU_HELP">s</s:String>
+
+    <s:String x:Key="TITLE_ABOUT">カセットHDDリスト について</s:String>
+    <s:String x:Key="RS_TITLE_ABOUT">タイトル</s:String>
+    <s:String x:Key="COPYRIGHT_ABOUT">著作権</s:String>
+    <s:String x:Key="VERSION_ABOUT">ファイルバージョン</s:String>
+    
+    <s:String x:Key="SC_IVDR_NAME">I-O DATA iVDR-S Media Server</s:String>
+    <s:String x:Key="SC_STARTFAIL"> は起動できませんでした</s:String>
+    <s:String x:Key="SC_STARTFAIL_TITLE">サービス起動エラー</s:String>
+    
+    <s:String x:Key="SC_REQUIRING_UPDATE">（要F/Wアップデート）</s:String>
+    
+    <s:String x:Key="LBL_COMFIRMATION_OF_UNLOCK_CHECK">容量ゼロです。HDDロックを確認しますか？</s:String>
+    <s:String x:Key="LBL_COMFIRMATION_OF_CHECKDSK">ディスク内容の破損の可能性があります。chkdskで確認しますか？</s:String>
+    <s:String x:Key="LBL_RUNNING_CHECKDSK_IVDR">chkdskで確認中です(iVDR)</s:String>
+    <s:String x:Key="LBL_RUNNING_CHECKDSK_OTHER">chkdskで確認中です(iVDR以外)</s:String>
+    <s:String x:Key="LBL_RUNNING_CHECKDSK_2">chkdskで確認中です(2/3)</s:String>
+    <s:String x:Key="LBL_RUNNING_CHECKDSK_3">chkdskで確認中です(3/3)</s:String>
+</ResourceDictionary>
