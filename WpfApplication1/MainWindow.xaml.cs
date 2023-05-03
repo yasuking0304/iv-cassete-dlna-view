@@ -58,7 +58,7 @@ namespace View
         private List<Customer> dlnaFileList = new List<Customer> { };
         private List<Customer> dlnaFileListbackup = new List<Customer> { };
         private EXEC_MODE ExecMode = EXEC_MODE.NONE;
-        private UpnpDeviceEventFinder eventFinder = new UpnpDeviceEventFinder();
+        private readonly UpnpDeviceEventFinder eventFinder = new UpnpDeviceEventFinder();
         private DispatcherTimer timer = new DispatcherTimer();
         private IpcRemoteObject remoteObject;
         private Process prs;
@@ -168,10 +168,10 @@ namespace View
             // ボタンに関するイベント通知の追加
             CopyButton.AddHandler(Button.MouseLeftButtonDownEvent,
                                 new MouseButtonEventHandler(CopyButtonButtonDowned), true);
-            CopyButton.AddHandler(Button.MouseLeftButtonUpEvent,
+            CopyButton.AddHandler(MouseLeftButtonUpEvent,
                                 new MouseButtonEventHandler(CopyButtonButtonUpped), true);
             // キーボード操作に関するイベント通知の追加
-            AddHandler(Control.KeyUpEvent, new KeyEventHandler(ListBox1KeyUp), true);
+            AddHandler(KeyUpEvent, new KeyEventHandler(ListBox1KeyUp), true);
             // 時間表示用タイマー
             timer.Tick += OnTimerTick;
             timer.Interval = new TimeSpan(0, 0, 1);
@@ -194,7 +194,7 @@ namespace View
                         return bnumber.drive.Equals(drive);
                     });
                     showDiskSize(dlnadrive);
-                    ShowInfoWindows(this.IsShowPanelFixed);
+                    ShowInfoWindows(IsShowPanelFixed);
                 }
                 RealTime.Text = realtime;
                 //dlnaletter.Clear();
