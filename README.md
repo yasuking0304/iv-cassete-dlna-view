@@ -1,6 +1,6 @@
 # iv-cassete-dlna-view
 
-Sorry, Japanese Only.
+This site is only available in Japanese.
 
 ## iVカセットリスト+Dlnaリスト表示
 
