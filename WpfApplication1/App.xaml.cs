@@ -78,9 +78,13 @@ namespace View
             }
             // check that there is only one instance of the control panel running...
             bool createdNew;
-            _instanceMutex = new System.Threading.Mutex(true, @"Global\IvCasseteDlnaView", out createdNew);
+            _instanceMutex = new Mutex(true, @"Global\IvCasseteDlnaView", out createdNew);
             if (!createdNew) {
                 _instanceMutex = null;
+                IpcClientManager client = new IpcClientManager();
+                /// 隠れている画面を最前面に表示指示
+                /// see send to MainWindow.xaml.cs > getData()
+                client.remoteObject.sendData("event:force_active");
                 Current.Shutdown();
                 return;
             }

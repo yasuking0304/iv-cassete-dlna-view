@@ -422,8 +422,8 @@ namespace View.DataConverter.LanguageConverter {
                         SingleShiftGL(GCODE_SET.NULL);
                     }
                 }
-            } catch (Exception e) {
-                outtemp =outtemp;
+            } catch (Exception) {
+                ;
             }
             return outtemp;
 

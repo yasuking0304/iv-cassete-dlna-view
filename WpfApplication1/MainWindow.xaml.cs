@@ -38,9 +38,26 @@ namespace View
         [DllImport("user32.dll")]
         private static extern int AppendMenu(
                   IntPtr hMenu, int Flagsw, int IDNewItem, string lpNewItem);
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool SetForegroundWindow(IntPtr hWnd);
+        [DllImport("user32.dll")]
+        private static extern int GetWindowThreadProcessId(
+            IntPtr hWnd, out int lpdwProcessId);
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern bool AttachThreadInput(
+            int idAttach, int idAttachTo, bool fAttach);
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern bool SystemParametersInfo(
+            uint uiAction, uint uiParam, IntPtr pvParam, uint fWinIni);
 
         private const int MF_SEPARATOR = 0x0800;
         private const int MENU_ABOUT = 100;
+        private const uint SPI_GETFOREGROUNDLOCKTIMEOUT = 0x2000;
+        private const uint SPI_SETFOREGROUNDLOCKTIMEOUT = 0x2001;
+        private const uint SPIF_SENDCHANGE = 0x2;
 
         private List<DataStruct.Drivemap> driveletter = new List<DataStruct.Drivemap> { };
 
@@ -136,7 +153,7 @@ namespace View
             InitializeComponent();
             instance = this;
 
-            App.Current.MainWindow.FontFamily = new System.Windows.Media.FontFamily("Meiryo UI, MS UI Gothic");
+            App.Current.MainWindow.FontFamily = new System.Windows.Media.FontFamily("Yu Gothic UI, Meiryo UI, MS UI Gothic");
             App.Current.MainWindow.Title =
                 Application.Current.TryFindResource("PG_TITLE") as string + " - non titled";
             Repair.Text = Application.Current.TryFindResource("LBL_COMFIRMATION_OF_UNLOCK_CHECK") as string;
@@ -1576,9 +1593,13 @@ namespace View
          **/
         private void getData(IpcRemoteObject.IpcRemoteObjectEventArg e) {
             try {
-                Dispatcher.InvokeAsync(
-                    (Action)(() =>
+                Dispatcher.InvokeAsync((Action)(() =>
                 {
+                    /// 画面を最前面に表示
+                    if (e.command.IndexOf("event:force_active") != -1) {
+                        ForceActiveWindow();
+                        return;
+                    }
                     Repair.Text = e.command;
                 }));
             } catch(Exception ex) {
@@ -1587,6 +1608,51 @@ namespace View
            // GetInstance().Repair.Text = e.command;
         }
 
+        /// <summary>
+        /// WPF画面を強制的にアクティブ化、最小化解除
+        /// </summary>
+        private void ForceActiveWindow()
+        {
+            // タスクバーが点滅すると無反応で結果にfalseが返却されるので何度かリトライ
+            for (int i = 0; i < 3; i++)
+            {
+                if (ForceActive(new WindowInteropHelper(this).Handle))
+                {
+                    break;
+                }
+            }
+            WindowState = WindowState.Normal;
+
+        }
+
+        /// <summary>
+        /// Windowフォーム画面を強制的にアクティブ化
+        /// </summary>
+        /// <param name="handle">フォームハンドル</param>
+        /// <returns>true: 成功, false: 失敗</returns>
+        private static bool ForceActive(IntPtr handle)
+        {
+            IntPtr dummy = IntPtr.Zero;
+            IntPtr timeout = IntPtr.Zero;
+
+            // フォアグラウンドウィンドウのスレッドIDを取得
+            int foregroundID = GetWindowThreadProcessId(GetForegroundWindow(), out _);
+            // 目的のウィンドウを作成したスレッドIDを取得
+            int targetID = GetWindowThreadProcessId(handle, out _);
+            // スレッドのインプット状態を連結
+            AttachThreadInput(targetID, foregroundID, true);
+            // 現在のウィンドウの切り替え時間を保存
+            SystemParametersInfo(SPI_GETFOREGROUNDLOCKTIMEOUT, 0, timeout, 0);
+            // ウィンドウの切り替え時間を 0ms にする
+            SystemParametersInfo(SPI_SETFOREGROUNDLOCKTIMEOUT, 0, dummy, SPIF_SENDCHANGE);
+            // ウィンドウをフォアグラウンドに持ってくる
+            bool isSuccess = SetForegroundWindow(handle);
+            // 切り替え時間を戻す
+            SystemParametersInfo(SPI_SETFOREGROUNDLOCKTIMEOUT, 0, timeout, SPIF_SENDCHANGE);
+            // スレッドのインプット状態を解除
+            AttachThreadInput(targetID, foregroundID, false);
+            return isSuccess;
+        }
     }
     // Converter
     [ValueConversion(typeof(bool?), typeof(bool?))]

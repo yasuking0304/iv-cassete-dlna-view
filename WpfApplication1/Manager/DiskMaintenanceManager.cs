@@ -64,6 +64,12 @@ namespace View.Manager
             p.Close();
         }
 
+        /// <summary>
+        /// コマンドラインの標準出力結果から次のコマンドを投入し、画面には作業状態を通知
+        /// see send to MainWindow.xaml.cs > getData()
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ProcessDataReceived(object sender, DataReceivedEventArgs e)
         {
             string line = e.Data.Trim();

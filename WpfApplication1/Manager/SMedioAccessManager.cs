@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using View.CommonStruct;
+using View.DidlLite;
 using View.EventArgs;
 
 namespace View.Manager {
@@ -49,15 +50,18 @@ namespace View.Manager {
                 Registry.CurrentUser,
                 "Software\\sMedio\\DubbingService\\DubbingService",
                 "LastPathAddedToVideoLibrary");
+            if (path.Equals(string.Empty)) return value;
             try
             {
                 string[] videoFiles = Directory.GetFiles(path, "*.dtcp.info");
-                string tvRecData = "";
+                Envelope objResponseXml = null;
                 foreach (string file in videoFiles)
                 {
                     using (StreamReader st = new StreamReader(file, Encoding.GetEncoding("UTF-8")))
                     {
-                        tvRecData = st.ReadToEnd();
+                        string tvRecData = st.ReadToEnd();
+
+                        objResponseXml = uPnpAccessManager.GetInstance().DeserializeEnvelope(tvRecData);
                     }
                     // イベント通知
                 }
