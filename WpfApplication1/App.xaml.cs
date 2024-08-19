@@ -64,10 +64,20 @@ namespace View
                 }
                 if ( e.Args[0] == "/netstart" && e.Args[1] == "ivdrs_media_server" ) {
                     bool? sv = ServiceAccessManager.SetIvdrServiceStart();
-                    if ( sv != null && sv == false ) {
+                    if (sv != null && sv == false) {
                         string scNameMessage = App.Current.Resources["SC_IVDR_NAME"].ToString()
                                              + App.Current.Resources["SC_STARTFAIL"].ToString();
                         MessageBox.Show( scNameMessage
+                                       , App.Current.Resources["SC_STARTFAIL_TITLE"].ToString()
+                                       , MessageBoxButton.OK
+                                       , MessageBoxImage.Error);
+                    }
+                    bool? iv = ServiceAccessManager.RestartIvdrTrayTool();
+                    if (iv is false)
+                    {
+                        string scNameMessage = App.Current.Resources["SC_IVDR_NAME"].ToString()
+                                             + App.Current.Resources["SC_STARTFAIL"].ToString();
+                        MessageBox.Show(scNameMessage
                                        , App.Current.Resources["SC_STARTFAIL_TITLE"].ToString()
                                        , MessageBoxButton.OK
                                        , MessageBoxImage.Error);

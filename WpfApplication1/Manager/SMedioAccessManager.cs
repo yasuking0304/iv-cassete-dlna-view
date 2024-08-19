@@ -28,10 +28,14 @@ namespace View.Manager {
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        private string GetRegistryString(RegistryKey hkey, string key, string value) {
+        private string GetRegistryString(RegistryKey hkey, string key, string value)
+        {
             RegistryKey regkey = hkey.OpenSubKey(key, false);
             //キーが存在しないときは '' が返される
-            if (regkey == null) return string.Empty;
+            if (regkey == null)
+            {
+                return string.Empty;
+            }
 
             //文字列を読み込む
             string stringValue = (string)regkey.GetValue(value);
@@ -50,7 +54,11 @@ namespace View.Manager {
                 Registry.CurrentUser,
                 "Software\\sMedio\\DubbingService\\DubbingService",
                 "LastPathAddedToVideoLibrary");
-            if (path.Equals(string.Empty)) return value;
+            if (path.Equals(string.Empty))
+            {
+                return value;
+            }
+
             try
             {
                 string[] videoFiles = Directory.GetFiles(path, "*.dtcp.info");
