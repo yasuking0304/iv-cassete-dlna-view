@@ -8,7 +8,7 @@ using Microsoft.Win32;
 
 namespace View.Manager
 {
-    class ClipBoardManager {
+    internal class ClipBoardManager {
         static public void SetClipBoardIvdr(List<Customer> ivdrlist) {
             string split = "\t";
             // タイトル

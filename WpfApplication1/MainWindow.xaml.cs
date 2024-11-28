@@ -224,7 +224,7 @@ namespace View
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
             eventFinder.CancelFindDeviceAsync();
-            CopyButton.RemoveHandler(Button.MouseLeftButtonDownEvent,
+            CopyButton.RemoveHandler(MouseLeftButtonDownEvent,
                                 new MouseButtonEventHandler(CopyButtonButtonDowned));
             CopyButton.RemoveHandler(Button.MouseLeftButtonUpEvent,
                                 new MouseButtonEventHandler(CopyButtonButtonUpped));
@@ -399,7 +399,7 @@ namespace View
                     Id = e.GetId(),
                     ParentId = e.GetParentId(),
                     Classes = e.GetClasses(),
-                    serviceUrl = e.GetUPnPServiceUrl(),
+                    ServiceUrl = e.GetUPnPServiceUrl(),
                     Channel = e.GetChannel(),
                 });
             }
@@ -433,7 +433,7 @@ namespace View
                     Classes = e.GetClasses(),
                     ImageSource = e.bmp,
                     FullAddress = e.GetImageUri(),
-                    serviceUrl = e.GetUPnPServiceUrl(),
+                    ServiceUrl = e.GetUPnPServiceUrl(),
                     Channel = e.GetChannel(),
                 });
                 Dispatcher.Invoke(DispatcherPriority.Normal
@@ -676,7 +676,7 @@ namespace View
                     Weeks = e.GetRecordDatTime().DayOfWeek.ToString().ToUpper(),
                     Id = string.Empty,
                     ParentId = string.Empty,
-                    serviceUrl = string.Empty
+                    ServiceUrl = string.Empty
                 });
             }
             Debug.Print(e.ToString());
@@ -1203,7 +1203,7 @@ namespace View
                 }
                 RaiseEvent(this, new FolderInfoEventArgs(EventStatus.ONSTART));
                 uPnpAccessManager.GetInstance().UpnpRecordContainerUrlInvoke(
-                                                id.Productname, id.serviceUrl, id.Id, id.ParentId, id.Title);
+                                                id.Productname, id.ServiceUrl, id.Id, id.ParentId, id.Title);
                 e.Handled = true;
             }
         }
@@ -1225,7 +1225,7 @@ namespace View
             }
             RaiseEvent(this, new FolderInfoEventArgs(EventStatus.ONSTART));
             uPnpAccessManager.GetInstance().UpnpRecordContainerUrlInvoke(
-                                                id.Productname, id.serviceUrl, id.Id, id.ParentId, id.Title);
+                                                id.Productname, id.ServiceUrl, id.Id, id.ParentId, id.Title);
             e.Handled = true;
         }
 
@@ -1236,7 +1236,7 @@ namespace View
             {
                 RaiseEvent(this, new FolderInfoEventArgs(EventStatus.ONSTART));
                 uPnpAccessManager.GetInstance().UpnpRecordContainerUrlInvoke(
-                                                id.Productname, id.serviceUrl, id.Id, id.ParentId, id.Title);
+                                                id.Productname, id.ServiceUrl, id.Id, id.ParentId, id.Title);
                 e.Handled = true;
             }
         }
@@ -1571,9 +1571,11 @@ namespace View
 
         private void IpcServer() {
             // IPC Channel作成
-             Hashtable properties = new Hashtable();
-             properties.Add("portName", "ivdr");
-             properties.Add("authorizedGroup", "Users");
+            Hashtable properties = new Hashtable
+            {
+                { "portName", "ivdr" },
+                { "authorizedGroup", "Users" }
+            };
             IpcServerChannel ipcChannel = new IpcServerChannel(properties, null);
 
             // チャンネル登録
@@ -1582,8 +1584,8 @@ namespace View
             // リモートオブジェクト生成
             remoteObject = new IpcRemoteObject();
             // イベントハンドラ設定
-            remoteObject.getData += new IpcRemoteObject.CallEventHandler(View.MainWindow.GetInstance().getData);
-            RemotingServices.Marshal(remoteObject, "ipc", typeof(IpcRemoteObject));
+            remoteObject.ReceivedData += new IpcRemoteObject.CallEventHandler(GetInstance().ReceivedData);
+            _ = RemotingServices.Marshal(remoteObject, "ipc", typeof(IpcRemoteObject));
         }
 
         /**
@@ -1591,19 +1593,20 @@ namespace View
          * メッセージが送られるとこれが呼ばれる。
          * 
          **/
-        private void getData(IpcRemoteObject.IpcRemoteObjectEventArg e) {
+        private void ReceivedData(IpcRemoteObject.IpcRemoteObjectEventArg e) {
             try {
-                Dispatcher.InvokeAsync((Action)(() =>
-                {
-                    /// 画面を最前面に表示
-                    if (e.command.IndexOf("event:force_active") != -1) {
-                        ForceActiveWindow();
-                        return;
-                    }
-                    Repair.Text = e.command;
-                }));
+                _ = Dispatcher.InvokeAsync(() =>
+                  {
+                      /// 画面を最前面に表示
+                      if (e.Command.IndexOf("event:force_active") != -1)
+                      {
+                          ForceActiveWindow();
+                          return;
+                      }
+                      Repair.Text = e.Command;
+                  });
             } catch(Exception ex) {
-                MessageBox.Show(ex.ToString());
+                _ = MessageBox.Show(ex.ToString());
             }
            // GetInstance().Repair.Text = e.command;
         }
@@ -1728,7 +1731,7 @@ namespace View
         public string Status { get; set; }
         public string Id { get; set; }
         public string ParentId { get; set; }
-        public string serviceUrl { get; set; }
+        public string ServiceUrl { get; set; }
         public BitmapSource ImageSource { get; set; }
         public string Classes { get; set; }
         public string ClassStartsWith {

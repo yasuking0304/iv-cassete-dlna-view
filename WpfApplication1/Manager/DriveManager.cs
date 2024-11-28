@@ -11,7 +11,7 @@ using System.Diagnostics;
 
 namespace View.Manager
 {
-    class DriveManager {
+    internal class DriveManager {
 
         /// <summary>
         /// USB機器からivdrドライブを取得する

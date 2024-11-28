@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace View.Manager {
-    class ServiceAccessManager
+    internal class ServiceAccessManager
     {
         [DllImport("user32.dll", SetLastError = true)]
         private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
@@ -151,9 +151,9 @@ namespace View.Manager {
             /// タスクトレイに対してマウスオーバー縦断
             if (GetWindowRect(hwndSysPager, out RECT rect))
             {
-                for (int x = rect.Left; x < rect.Right; x += 24)
+                for (int x = rect.Left; x < rect.Right; x += 12)
                 {
-                    for (int y = rect.Top; y < rect.Bottom; y += 24)
+                    for (int y = rect.Top; y < rect.Bottom; y += 12)
                     {
                         SetCursorPos(x + 8, y + 8);
                         Thread.Sleep(1);

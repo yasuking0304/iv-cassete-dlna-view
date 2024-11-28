@@ -17,7 +17,7 @@ using View.Delegate;
 
 namespace View.Manager {
 
-    class IvdrAccessManager {
+    internal class IvdrAccessManager {
 
         // インスタンス生成
         private static IvdrAccessManager instance = null;

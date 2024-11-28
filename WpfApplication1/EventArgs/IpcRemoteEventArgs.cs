@@ -6,19 +6,17 @@ namespace View.EventArgs {
 
     public class IpcRemoteObject : MarshalByRefObject {
         public class IpcRemoteObjectEventArg {
-            public string command { get; set; }
+            public string Command { get; set; }
             public IpcRemoteObjectEventArg(string cmd) {
-                command = cmd;
+                Command = cmd;
             }
         }
 
         public delegate void CallEventHandler(IpcRemoteObjectEventArg e);
-        public event CallEventHandler getData;
+        public event CallEventHandler ReceivedData;
 
-        public void sendData(string cmd) {
-            if (getData != null) {
-                getData(new IpcRemoteObjectEventArg(cmd));
-            }
+        public void SendData(string cmd) {
+            ReceivedData?.Invoke(new IpcRemoteObjectEventArg(cmd));
         }
         public override object InitializeLifetimeService() {
             return null;

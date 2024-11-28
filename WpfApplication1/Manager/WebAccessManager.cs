@@ -15,7 +15,7 @@ using System.Diagnostics;
 using System.Net.Cache;
 
 namespace View.Manager {
-    class WebAccessManager {
+    internal class WebAccessManager {
         // インスタンス生成
         private static uPnpAccessManager instance = null;
 

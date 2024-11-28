@@ -93,8 +93,8 @@ namespace View
                 _instanceMutex = null;
                 IpcClientManager client = new IpcClientManager();
                 /// 隠れている画面を最前面に表示指示
-                /// see send to MainWindow.xaml.cs > getData()
-                client.remoteObject.sendData("event:force_active");
+                /// see send to MainWindow.xaml.cs > ReceivedData()
+                client.remoteObject.SendData("event:force_active");
                 Current.Shutdown();
                 return;
             }

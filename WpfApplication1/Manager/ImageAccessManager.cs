@@ -9,13 +9,13 @@ using System.Text;
 using System.Windows.Interop;
 
 namespace View.Manager {
-    class ImageAccessManager {
+    internal class ImageAccessManager {
 
         private const UInt32 SHGSI_ICON      = 0x000000100;
         private const UInt32 SHGSI_SMALLICON = 0x000000001;
         private const UInt32 SIID_SHIELD     = 0x00000004D;
 
-        [StructLayoutAttribute(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         struct SHSTOCKICONINFO {
             public Int32 cbSize;
             public IntPtr hIcon;

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace View.Manager
 {
-    class DiskMaintenanceManager
+    internal class DiskMaintenanceManager
     {
         private static System.IO.StreamWriter sw = null;
         private static System.Diagnostics.Process p = null;
@@ -66,7 +66,7 @@ namespace View.Manager
 
         /// <summary>
         /// コマンドラインの標準出力結果から次のコマンドを投入し、画面には作業状態を通知
-        /// see send to MainWindow.xaml.cs > getData()
+        /// see send to MainWindow.xaml.cs > ReceivedData()
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -81,14 +81,14 @@ namespace View.Manager
             if (line.IndexOf("Microsoft DiskPart version") != -1)
             {
                 //diskpartがロードされた
-                client.remoteObject.sendData("ロック確認を開始します。");
+                client.remoteObject.SendData("ロック確認を開始します。");
             }
             // diskpart 
             if (line.IndexOf("Current Read-only State : No") != -1)
             {
                 //diskpartを終了する
                 sw.WriteLine(@"exit");
-                client.remoteObject.sendData("ロックはされていませんでした。");
+                client.remoteObject.SendData("ロックはされていませんでした。");
             }
             // diskpart 
             if (line.IndexOf("Current Read-only State : Yes") != -1)
@@ -97,7 +97,7 @@ namespace View.Manager
                 sw.WriteLine(@"attribute disk clear readonly");
                 // diskpartを終了する
                 sw.WriteLine(@"exit");
-                client.remoteObject.sendData("ロックを解除しました。");
+                client.remoteObject.SendData("ロックを解除しました。");
             }
             // diskpart exit
             if (line.IndexOf("Leaving DiskPart...") != -1)
@@ -105,7 +105,7 @@ namespace View.Manager
                 Thread.Sleep(2000);
                 // 残り容量チェック
                 sw.WriteLine(@"fsutil volume diskfree " + driveLetter);
-                client.remoteObject.sendData("ロック処理を終了中です...");
+                client.remoteObject.SendData("ロック処理を終了中です...");
             }
             // fsutil volume diskfree 成功
             if (line.IndexOf("Total free bytes") != -1 && line.IndexOf(" 0 (  0.0 KB)") == -1)
@@ -113,60 +113,60 @@ namespace View.Manager
                 // コマンドプロンプトを終了する
                 sw.WriteLine(@"exit");
                 sw.Close();
-                client.remoteObject.sendData("チェック処理を終了します。");
+                client.remoteObject.SendData("チェック処理を終了します。");
             }
             // fsutil volume diskfree 失敗?
             if (line.IndexOf("Total free bytes") != -1 && line.IndexOf(" 0 (  0.0 KB)") != -1)
             {
                 // chkdsk起動
                 sw.WriteLine(@"chkdsk /f " + driveLetter);
-                client.remoteObject.sendData("disk調査処理を開始します。");
+                client.remoteObject.SendData("disk調査処理を開始します。");
             }
             // chkdsk /f
             if (line.IndexOf("The type of the file system is") != -1 && line.IndexOf("UDF.") != -1)
             {
-                client.remoteObject.sendData("このドライブはiVDRです。");
+                client.remoteObject.SendData("このドライブはiVDRです。");
             }
             if (line.IndexOf("The type of the file system is") != -1 && line.IndexOf("UDF.") == -1)
             {
-                client.remoteObject.sendData("このドライブはiVDRではありません。");
+                client.remoteObject.SendData("このドライブはiVDRではありません。");
             }
             if (line.IndexOf("CHKDSK is verifying ICBs") != -1)
             {
-                client.remoteObject.sendData("disk調査(1/5)");
+                client.remoteObject.SendData("disk調査(1/5)");
             }
             if (line.IndexOf("CHKDSK is looking for orphan ICBs") != -1)
             {
-                client.remoteObject.sendData("disk調査(2/5)");
+                client.remoteObject.SendData("disk調査(2/5)");
             }
             if (line.IndexOf("CHKDSK is verifying ICB links") != -1)
             {
-                client.remoteObject.sendData("disk調査(3/5)");
+                client.remoteObject.SendData("disk調査(3/5)");
             }
             if (line.IndexOf("CHKDSK is verifying link counts and parent entries") != -1)
             {
-                client.remoteObject.sendData("disk調査(4/5)");
+                client.remoteObject.SendData("disk調査(4/5)");
             }
             if (line.IndexOf("CHKDSK is verifying object size for ICBs") != -1)
             {
-                client.remoteObject.sendData("disk調査(5/5)");
+                client.remoteObject.SendData("disk調査(5/5)");
             }
             if (line.IndexOf("file system and found no problems") != -1)
             {
-                client.remoteObject.sendData("disk調査結果、問題はありませんでした。");
+                client.remoteObject.SendData("disk調査結果、問題はありませんでした。");
             }
             if (line.IndexOf("file system and found problems") != -1)
             {
-                client.remoteObject.sendData("disk回復処理を行います。30分から1時間かかる場合もあります。");
+                client.remoteObject.SendData("disk回復処理を行います。30分から1時間かかる場合もあります。");
             }
             if (line.IndexOf("allocation units available on disk") != -1)
             {
-                client.remoteObject.sendData("disk調査処理を終了します。");
+                client.remoteObject.SendData("disk調査処理を終了します。");
                 Thread.Sleep(2000);
                 // コマンドプロンプトを終了する
                 sw.WriteLine(@"exit");
                 sw.Close();
-                client.remoteObject.sendData("チェック処理を終了します。");
+                client.remoteObject.SendData("チェック処理を終了します。");
             }
         }
     }

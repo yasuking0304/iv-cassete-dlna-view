@@ -9,7 +9,7 @@ using View.DidlLite;
 using View.EventArgs;
 
 namespace View.Manager {
-    class SMedioAccessManager {
+    internal class SMedioAccessManager {
 
         // インスタンス生成
         private static SMedioAccessManager instance = null;

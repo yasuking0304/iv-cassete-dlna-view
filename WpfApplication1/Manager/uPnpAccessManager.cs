@@ -14,7 +14,7 @@ using View.upnpLocation;
 
 namespace View.Manager {
 
-    class uPnpAccessManager {
+    internal class uPnpAccessManager {
 
         // インスタンス生成
         private static uPnpAccessManager instance = null;
