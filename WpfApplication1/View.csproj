@@ -128,6 +128,7 @@
     </ApplicationDefinition>
     <Compile Include="Delegate\UpnpDeviceEventFinder.cs" />
     <Compile Include="Manager\DiskMaintenanceManager.cs" />
+    <Compile Include="Manager\ForceActiveWindowManager.cs" />
     <Compile Include="Manager\IpcClientManager.cs" />
     <Compile Include="Manager\ImageAccessManager.cs" />
     <Compile Include="Manager\SMedioAccessManager.cs" />

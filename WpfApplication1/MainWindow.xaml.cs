@@ -38,26 +38,9 @@ namespace View
         [DllImport("user32.dll")]
         private static extern int AppendMenu(
                   IntPtr hMenu, int Flagsw, int IDNewItem, string lpNewItem);
-        [DllImport("user32.dll")]
-        private static extern IntPtr GetForegroundWindow();
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool SetForegroundWindow(IntPtr hWnd);
-        [DllImport("user32.dll")]
-        private static extern int GetWindowThreadProcessId(
-            IntPtr hWnd, out int lpdwProcessId);
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern bool AttachThreadInput(
-            int idAttach, int idAttachTo, bool fAttach);
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern bool SystemParametersInfo(
-            uint uiAction, uint uiParam, IntPtr pvParam, uint fWinIni);
 
         private const int MF_SEPARATOR = 0x0800;
         private const int MENU_ABOUT = 100;
-        private const uint SPI_GETFOREGROUNDLOCKTIMEOUT = 0x2000;
-        private const uint SPI_SETFOREGROUNDLOCKTIMEOUT = 0x2001;
-        private const uint SPIF_SENDCHANGE = 0x2;
 
         private List<DataStruct.Drivemap> driveletter = new List<DataStruct.Drivemap> { };
 
@@ -932,18 +915,18 @@ namespace View
                 IvdrDiscSpace1.Value = disksSizes[0].parsize;
                 LabelIvdrTotalSize1.Text = disksSizes[0].name + " " + string.Format(
                                         TryFindResource("SIZE_OF_DISC") as string,
-                                        (decimal)((uint)(disksSizes[0].totalsize / (1000 * 1000 * 100))) / 10);
+                                        (decimal)(uint)(disksSizes[0].totalsize / (1000 * 1000 * 100)) / 10);
                 Iv1RecTime_comp_non.Text = string.Format(TryFindResource("SIZE_OF_TIME") as string,
-                                        ((uint)((disksSizes[0].totalsize / (1000 * 1000 * 10)) / 764)));
+                                        (uint)((disksSizes[0].totalsize / (1000 * 1000 * 10)) / 764));
                 Iv1RecTime_comp_4th.Text = string.Format(TryFindResource("SIZE_OF_TIME") as string,
-                                        ((uint)((disksSizes[0].totalsize / (1000 * 1000 * 10)) / 271)));
+                                        (uint)(disksSizes[0].totalsize / (1000 * 1000 * 10) / 271));
                 LabelIvdrFreeSize1.Text = string.Format(
                                         TryFindResource("FREE_SPACE") as string,
-                                        (decimal)((uint)(disksSizes[0].freesize / (1000 * 1000 * 100))) / 10);
+                                        (decimal)(uint)(disksSizes[0].freesize / (1000 * 1000 * 100)) / 10);
                 Iv1FreeTime_comp_non.Text = string.Format(TryFindResource("SIZE_OF_TIME") as string,
-                                        ((uint)((disksSizes[0].freesize / (1000 * 1000 * 10)) / 764)));
+                                        (uint)(disksSizes[0].freesize / (1000 * 1000 * 10) / 764));
                 Iv1FreeTime_comp_4th.Text = string.Format(TryFindResource("SIZE_OF_TIME") as string,
-                                        ((uint)((disksSizes[0].freesize / (1000 * 1000 * 10)) / 271)));
+                                        (uint)(disksSizes[0].freesize / (1000 * 1000 * 10) / 271));
             }
             else
             {
@@ -957,18 +940,18 @@ namespace View
                 IvdrDiscSpace2.Value = disksSizes[1].parsize;
                 LabelIvdrTotalSize2.Text = disksSizes[1].name + " " + string.Format(
                                         TryFindResource("SIZE_OF_DISC") as string,
-                                        (decimal)((uint)(disksSizes[1].totalsize / (1000 * 1000 * 100))) / 10);
+                                        (decimal)(uint)(disksSizes[1].totalsize / (1000 * 1000 * 100)) / 10);
                 Iv2RecTime_comp_non.Text = string.Format(TryFindResource("SIZE_OF_TIME") as string,
-                                        ((uint)((disksSizes[1].totalsize / (1000 * 1000 * 10)) / 764)));
+                                        (uint)(disksSizes[1].totalsize / (1000 * 1000 * 10) / 764));
                 Iv2RecTime_comp_4th.Text = string.Format(TryFindResource("SIZE_OF_TIME") as string,
-                                        ((uint)((disksSizes[1].totalsize / (1000 * 1000 * 10)) / 271)));
+                                        (uint)(disksSizes[1].totalsize / (1000 * 1000 * 10) / 271));
                 LabelIvdrFreeSize2.Text = string.Format(
                                         TryFindResource("FREE_SPACE") as string,
-                                        (decimal)((uint)(disksSizes[1].freesize / (1000 * 1000 * 100))) / 10);
+                                        (decimal)(uint)(disksSizes[1].freesize / (1000 * 1000 * 100)) / 10);
                 Iv2FreeTime_comp_non.Text = string.Format(TryFindResource("SIZE_OF_TIME") as string,
-                                        ((uint)((disksSizes[1].freesize / (1000 * 1000 * 10)) / 764)));
+                                        (uint)(disksSizes[1].freesize / (1000 * 1000 * 10) / 764));
                 Iv2FreeTime_comp_4th.Text = string.Format(TryFindResource("SIZE_OF_TIME") as string,
-                                        ((uint)((disksSizes[1].freesize / (1000 * 1000 * 10)) / 271)));
+                                        (uint)(disksSizes[1].freesize / (1000 * 1000 * 10) / 271));
             }
             else
             {
@@ -1066,10 +1049,10 @@ namespace View
             });
             try
             {
-                ProgressDiscSpace.Value = ((double)cdrive.TotalFreeSpace / (double)cdrive.TotalSize) * 100;
+                ProgressDiscSpace.Value = (double)cdrive.TotalFreeSpace / (double)cdrive.TotalSize * 100;
                 LabelSizeOfDisc.Text = string.Format(
                                         TryFindResource("SIZE_OF_DISC") as string,
-                                        (decimal)((uint)(cdrive.TotalSize / (1000 * 1000 * 100))) / 10);
+                                        (decimal)(uint)(cdrive.TotalSize / (1000 * 1000 * 100)) / 10);
                 ProgressDiscSpace.Visibility = Visibility.Visible;
                 RecSearch.Visibility = Visibility.Visible;
                 SearchDoneButton.Visibility = Visibility.Visible;
@@ -1113,16 +1096,16 @@ namespace View
                 SmallSHIELD.Visibility = Visibility.Hidden;
                 LabelFreeDisc.Text = string.Format(
                                     TryFindResource("FREE_SPACE") as string,
-                                    (decimal)((uint)(cdrive.TotalFreeSpace / (1000 * 1000 * 100))) / 10);
+                                    (decimal)(uint)(cdrive.TotalFreeSpace / (1000 * 1000 * 100)) / 10);
 
                 DvRecTime_comp_non.Text = string.Format(TryFindResource("SIZE_OF_TIME") as string,
-                                        ((uint)((cdrive.TotalSize / (1000 * 1000 * 10)) / 764)));
+                                        (uint)(cdrive.TotalSize / (1000 * 1000 * 10) / 764));
                 DvRecTime_comp_4th.Text = string.Format(TryFindResource("SIZE_OF_TIME") as string,
-                                        ((uint)((cdrive.TotalSize / (1000 * 1000 * 10)) / 271)));
+                                        (uint)(cdrive.TotalSize / (1000 * 1000 * 10) / 271));
                 DvFreeTime_comp_non.Text = string.Format(TryFindResource("SIZE_OF_TIME") as string,
-                                        ((uint)((cdrive.TotalFreeSpace / (1000 * 1000 * 10)) / 764)));
+                                        (uint)((cdrive.TotalFreeSpace / (1000 * 1000 * 10)) / 764));
                 DvFreeTime_comp_4th.Text = string.Format(TryFindResource("SIZE_OF_TIME") as string,
-                                        ((uint)((cdrive.TotalFreeSpace / (1000 * 1000 * 10)) / 271)));
+                                        (uint)(cdrive.TotalFreeSpace / (1000 * 1000 * 10) / 271));
             } catch (Exception) {
                 ProgressDiscSpace.Visibility = Visibility.Hidden;
                 RecSearch.Visibility = Visibility.Hidden;
@@ -1398,7 +1381,7 @@ namespace View
             // VID_04BB&PID_0A14='I-O_DATA/RHDM-UT' IODATA RHDM-UT series
             // VID_152D&PID_0539='JMicron/JMS539'   Maxell M-VDRS-ADP
             // VID_152D&PID_2339='JMicron/JM20339'  HGST   iP1000zx-ADP
-            driveletter = Manager.DriveManager.GetUsbStorName(
+            driveletter = DriveManager.GetUsbStorName(
                                 "VID_04BB&PID_0A11,VID_04BB&PID_0A14,VID_152D&PID_0539,VID_152D&PID_2339");
             //dlnaletter = Manager.DriveManager.GetDlnaName();
             // Drive ComboBox初期化
@@ -1531,7 +1514,7 @@ namespace View
         private static void OpenAboutDialog()
         {
             ViewAbout wnd = new ViewAbout();
-            wnd.Owner = Window.GetWindow(GetInstance());
+            wnd.Owner = GetWindow(GetInstance());
             wnd.ShowDialog();
         }
 
@@ -1590,7 +1573,7 @@ namespace View
 
         /**
          * イベントハンドラに設定するメソッド
-         * メッセージが送られるとこれが呼ばれる。
+         * メッセージを受信すると呼ばれる。
          * 
          **/
         private void ReceivedData(IpcRemoteObject.IpcRemoteObjectEventArg e) {
@@ -1598,9 +1581,10 @@ namespace View
                 _ = Dispatcher.InvokeAsync(() =>
                   {
                       /// 画面を最前面に表示
-                      if (e.Command.IndexOf("event:force_active") != -1)
+                      if (e.Command == "event:force_active")
                       {
-                          ForceActiveWindow();
+                          ForceActiveWindowManager.ForceActiveWindow(
+                              new WindowInteropHelper(this).Handle, this);
                           return;
                       }
                       Repair.Text = e.Command;
@@ -1611,51 +1595,6 @@ namespace View
            // GetInstance().Repair.Text = e.command;
         }
 
-        /// <summary>
-        /// WPF画面を強制的にアクティブ化、最小化解除
-        /// </summary>
-        private void ForceActiveWindow()
-        {
-            // タスクバーが点滅すると無反応で結果にfalseが返却されるので何度かリトライ
-            for (int i = 0; i < 3; i++)
-            {
-                if (ForceActive(new WindowInteropHelper(this).Handle))
-                {
-                    break;
-                }
-            }
-            WindowState = WindowState.Normal;
-
-        }
-
-        /// <summary>
-        /// Windowフォーム画面を強制的にアクティブ化
-        /// </summary>
-        /// <param name="handle">フォームハンドル</param>
-        /// <returns>true: 成功, false: 失敗</returns>
-        private static bool ForceActive(IntPtr handle)
-        {
-            IntPtr dummy = IntPtr.Zero;
-            IntPtr timeout = IntPtr.Zero;
-
-            // フォアグラウンドウィンドウのスレッドIDを取得
-            int foregroundID = GetWindowThreadProcessId(GetForegroundWindow(), out _);
-            // 目的のウィンドウを作成したスレッドIDを取得
-            int targetID = GetWindowThreadProcessId(handle, out _);
-            // スレッドのインプット状態を連結
-            AttachThreadInput(targetID, foregroundID, true);
-            // 現在のウィンドウの切り替え時間を保存
-            SystemParametersInfo(SPI_GETFOREGROUNDLOCKTIMEOUT, 0, timeout, 0);
-            // ウィンドウの切り替え時間を 0ms にする
-            SystemParametersInfo(SPI_SETFOREGROUNDLOCKTIMEOUT, 0, dummy, SPIF_SENDCHANGE);
-            // ウィンドウをフォアグラウンドに持ってくる
-            bool isSuccess = SetForegroundWindow(handle);
-            // 切り替え時間を戻す
-            SystemParametersInfo(SPI_SETFOREGROUNDLOCKTIMEOUT, 0, timeout, SPIF_SENDCHANGE);
-            // スレッドのインプット状態を解除
-            AttachThreadInput(targetID, foregroundID, false);
-            return isSuccess;
-        }
     }
     // Converter
     [ValueConversion(typeof(bool?), typeof(bool?))]

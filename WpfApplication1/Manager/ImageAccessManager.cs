@@ -11,22 +11,22 @@ using System.Windows.Interop;
 namespace View.Manager {
     internal class ImageAccessManager {
 
-        private const UInt32 SHGSI_ICON      = 0x000000100;
-        private const UInt32 SHGSI_SMALLICON = 0x000000001;
-        private const UInt32 SIID_SHIELD     = 0x00000004D;
+        private const uint SHGSI_ICON      = 0x000000100;
+        private const uint SHGSI_SMALLICON = 0x000000001;
+        private const uint SIID_SHIELD     = 0x00000004D;
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         struct SHSTOCKICONINFO {
-            public Int32 cbSize;
+            public int cbSize;
             public IntPtr hIcon;
-            public Int32 iSysImageIndex;
-            public Int32 iIcon;
+            public int iSysImageIndex;
+            public int iIcon;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
             public string szPath;
         }
 
         [DllImport("shell32.dll", CharSet = CharSet.Unicode)]
-        static extern void SHGetStockIconInfo(UInt32 siid, UInt32 uFlags, ref SHSTOCKICONINFO sii);
+        private static extern void SHGetStockIconInfo(uint siid, uint uFlags, ref SHSTOCKICONINFO sii);
     
         /// <summary>
         /// 権限昇格シールドアイコン取得

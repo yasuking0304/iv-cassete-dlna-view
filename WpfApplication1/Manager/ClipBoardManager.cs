@@ -9,7 +9,7 @@ using Microsoft.Win32;
 namespace View.Manager
 {
     internal class ClipBoardManager {
-        static public void SetClipBoardIvdr(List<Customer> ivdrlist) {
+        public static void SetClipBoardIvdr(List<Customer> ivdrlist) {
             string split = "\t";
             // タイトル
             string getText = string.Empty;
@@ -17,7 +17,8 @@ namespace View.Manager
                         + split + "\"filename\"" + split + "\"foldername\"\r\n";
 
             // itemデータ
-            for( int i=0; i<ivdrlist.Count; i++) {
+            for (int i = 0; i < ivdrlist.Count; i++)
+            {
                 text += "\"" + ivdrlist[i].Title + "\"" + split
                       + "\"" + ivdrlist[i].SortRecordDatTime + "\"" + split
                       + "\"" + ivdrlist[i].DurationTimeNormal + "\"" + split
@@ -26,7 +27,7 @@ namespace View.Manager
             }
             Clipboard.SetDataObject(text, true);
         }
-        static public void SetClipBoardDlna(List<Customer> ivdrlist) {
+        public static void SetClipBoardDlna(List<Customer> ivdrlist) {
             string split = "\t";
             // タイトル
             string getText = string.Empty;
@@ -35,14 +36,16 @@ namespace View.Manager
                         + split + "\"channel\"\r\n";
 
             // itemデータ
-            for( int i=0; i<ivdrlist.Count; i++) {
-                if ( ivdrlist[i].Classes.StartsWith("object.container") ) {
+            for(int i = 0; i < ivdrlist.Count; i++) {
+                if (ivdrlist[i].Classes.StartsWith("object.container"))
+                {
                     continue;
                 }
                 string[] genreList = ivdrlist[i].Genre.Split(new char[] { '\t'});
                 string genre = string.Empty;
-                for ( int igene=0 ; igene <genreList.Length; igene++ ) {
-                    if (  genreList[igene].Trim() != string.Empty ) {
+                for (int igene = 0; igene < genreList.Length; igene++)
+                {
+                    if (genreList[igene].Trim() != string.Empty ) {
                         genre += ( genre == string.Empty) ? genreList[igene] : ";" + genreList[igene];
                     }
                 }
